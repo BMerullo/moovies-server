@@ -1,0 +1,20 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Welcome to the Moovies! This is an online platform where you can search for movies, leave comments and reviews, and interact with other movie enthusiasts.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BMerullo/moovies-server.git"
+  },
+  "keywords": [],
+  "author": "bob merullo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BMerullo/moovies-server/issues"
+  },
+  "homepage": "https://github.com/BMerullo/moovies-server#readme"
+}
