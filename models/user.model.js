@@ -6,22 +6,25 @@ const UserSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      unique: [true, "Email must be unique"],
-      required: [true, "Username is requires"],
+      unique: [true, `email must be unique`],
+      required: [true, "Username is required"],
     },
+
     email: {
       type: String,
-      unique: [true, "Email must be unique"],
-      required: [true, "An email address is required"],
+      unique: [true, `email must be unique`],
+      required: [true, "email is required"],
     },
+
     password: {
       type: String,
       required: [true, "Password is required"],
-      minlength: [8, "Your password must be at least 8 characters long"],
+      minlength: [8, "Password must be at least 8 characters"],
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 )
+
 UserSchema.virtual("confirmPassword")
   .get(() => this._confirmPassword)
   .set((value) => (this._confirmPassword = value))
@@ -29,14 +32,14 @@ UserSchema.virtual("confirmPassword")
 UserSchema.pre("validate", function (next) {
   console.log("invalidate")
   if (this.password !== this.confirmPassword) {
-    this.invalidate("ConfirmPassword", "Password must match")
-    console.log("Didnt match")
+    this.invalidate("confirmPassword", "Password must match")
+    console.log("Didn't match")
   }
   console.log(this.password, this.confirmPassword)
   next()
 })
 
-UserSchema.pre("save", function (next) {
+UserSchema.pre("Save", function (next) {
   console.log("Pre save")
   bcrypt.hash(this.password, 10).then((hashedPassword) => {
     console.log("In the hash")
