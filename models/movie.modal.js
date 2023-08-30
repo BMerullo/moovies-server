@@ -16,9 +16,15 @@ const MovieSchema = new mongoose.Schema(
       max: [10],
     },
     comment: {
-      Type: String,
+      type: String,
       minLength: [3, "Description must be at least 3 characters long!"],
       maxLength: [500, "Please keep your description under 500 characters"],
+    },
+    favorite: {
+      type: Boolean,
+    },
+    watchList: {
+      type: Boolean,
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
