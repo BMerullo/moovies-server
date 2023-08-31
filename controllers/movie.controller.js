@@ -73,7 +73,7 @@ module.exports = {
       })
   },
 
-  deleteSetup: (req, res) => {
+  deleteMovie: (req, res) => {
     Movie.deleteOne({ _id: req.params.id })
       .then((deletedMovie) => {
         console.log(deletedMovie)

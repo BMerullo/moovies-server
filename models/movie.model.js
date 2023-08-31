@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const MovieSchema = new mongoose.Schema(
   {
     id: {
-      type: String,
+      type: Number,
     },
     title: {
       type: String,
