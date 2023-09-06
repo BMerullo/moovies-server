@@ -21,14 +21,14 @@ const MovieSchema = new mongoose.Schema(
       maxLength: [500, "Please keep your description under 500 characters"],
     },
     favorite: {
-      type: Boolean,
+      type: Boolean[false],
     },
     watchList: {
-      type: Boolean,
+      type: Boolean[false],
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "user",
     },
   },
   { timestamps: true }

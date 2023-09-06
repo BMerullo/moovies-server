@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken")
 module.exports = {
   findAllMovies: (req, res) => {
     Movie.find({})
-      .populate("createdBy", "username_id")
+      .populate("createdBy", "username _id")
       .then((allMovies) => {
         console.log(allMovies)
         res.json(allMovies)
@@ -46,6 +46,8 @@ module.exports = {
     const decodedJWT = jwt.decode(req.cookies.usertoken, {
       complete: true,
     })
+
+    newMovieObj.createdBy = decodedJWT.payload.id
     newMovieObj
       .save()
       .then((newMovie) => {
