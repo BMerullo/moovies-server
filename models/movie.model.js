@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 const MovieSchema = new mongoose.Schema(
   {
-    id: {
+    movieId: {
       type: Number,
     },
     title: {
@@ -17,14 +17,14 @@ const MovieSchema = new mongoose.Schema(
     },
     comment: {
       type: String,
-      minLength: [3, "Description must be at least 3 characters long!"],
-      maxLength: [500, "Please keep your description under 500 characters"],
+      minLength: [3, "Comment must be at least 3 characters long!"],
+      maxLength: [500, "Please keep your comment under 500 characters"],
     },
     favorite: {
-      type: Boolean[false],
+      type: Boolean,
     },
     watchList: {
-      type: Boolean[false],
+      type: Boolean,
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
