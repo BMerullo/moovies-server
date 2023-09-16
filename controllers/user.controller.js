@@ -47,7 +47,7 @@ module.exports = {
                     ),
                     {
                       httpOnly: true,
-                      expires: new Date(Date.now() + 60),
+                      expires: new Date(Date.now() + 60000),
                     }
                   )
                   .json({
