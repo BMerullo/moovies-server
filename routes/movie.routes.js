@@ -9,3 +9,5 @@ module.exports = (app) => {
   app.put("/api/movie/:id", movieController.updateMovie)
   app.delete("/api/movie/:id", movieController.deleteMovie)
 }
+
+// authenticate,
