@@ -51,12 +51,12 @@ module.exports = {
     newMovieObj
       .save()
       .then((newMovie) => {
-        console.log(newMovie)
+        console.log(newMovie, "newMovie")
         res.json(newMovie)
       })
       .catch((err) => {
         console.log("Something went wrong in createNewMovie")
-        res.json(400).json(err)
+        // res.json(400).json(err)
       })
   },
 
