@@ -27,7 +27,7 @@ module.exports = {
   },
 
   findOneMovie: (req, res) => {
-    Movie.findOne({ movieId: req.params.movieId })
+    Movie.findOne({ objectId: req.params.id })
       .then((oneMovie) => {
         console.log(oneMovie)
         res.json(oneMovie)
