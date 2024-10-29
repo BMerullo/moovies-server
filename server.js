@@ -21,6 +21,7 @@ app.use(cookieParser())
 require("./config/mongoose.config")
 require("./routes/user.routes")(app)
 require("./routes/movie.routes")(app)
+require("./routes/favorite.routes")(app)
 
 mongoose
   .connect(process.env.MONGO_URI)
