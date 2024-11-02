@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken")
 
 module.exports = {
   findAllFavoritesByUser: (req, res) => {
-    Favorite.find({ createdBy: req.params.userId })
+    Favorite.find({ createdBy: req.params.userId.trim() })
       .then((allUserFavorites) => {
         console.log(allUserFavorites)
         res.json(allUserFavorites)
@@ -37,7 +37,7 @@ module.exports = {
   },
 
   deleteFavorite: (req, res) => {
-    Favorite.deleteOne({ _id: req.params.id })
+    Favorite.deleteOne({ _id: req.params.id.trim() })
       .then((deletedFavorite) => {
         console.log(deletedFavorite)
         res.json(deletedFavorite)
