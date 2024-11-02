@@ -13,6 +13,23 @@ module.exports = {
         res.status(400).json(err)
       })
   },
+  findWatchListByUserAndMovie: (req, res) => {
+    const { userId, movieId } = req.params
+
+    WatchList.findOne({ createdBy: userId.trim(), movieId: movieId.trim() })
+      .then((watchList) => {
+        if (watchList) {
+          console.log(watchList)
+          res.json(watchList)
+        } else {
+          res.status(404).json({ message: "WatchList not found" })
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        res.status(400).json(err)
+      })
+  },
   createNewWatchList: (req, res) => {
     const newWatchListObj = new WatchList(req.body)
     const decodedJWT = jwt.decode(req.cookies.usertoken, {

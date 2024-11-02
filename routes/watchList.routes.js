@@ -6,6 +6,10 @@ module.exports = (app) => {
     "/api/user/watchList/:userId",
     watchListController.findAllWatchListsByUser
   )
+  app.get(
+    "/api/user/:userId/watchList/:movieId",
+    watchListController.findWatchListByUserAndMovie
+  )
   app.post(
     "/api/watchlist",
     authenticate,

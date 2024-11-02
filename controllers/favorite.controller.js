@@ -13,6 +13,24 @@ module.exports = {
         res.status(400).json(err)
       })
   },
+  findFavoriteByUserAndMovie: (req, res) => {
+    const { userId, movieId } = req.params
+
+    Favorite.findOne({ createdBy: userId.trim(), movieId: movieId.trim() })
+      .then((favorite) => {
+        if (favorite) {
+          console.log(favorite)
+          res.json(favorite)
+        } else {
+          res.status(404).json({ message: "Favorite not found" })
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        res.status(400).json(err)
+      })
+  },
+
   createNewFavorite: (req, res) => {
     const newFavoriteObj = new Favorite(req.body)
     const decodedJWT = jwt.decode(req.cookies.usertoken, {
