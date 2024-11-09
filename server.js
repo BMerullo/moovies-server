@@ -24,6 +24,7 @@ require("./routes/movie.routes")(app)
 require("./routes/favorite.routes")(app)
 require("./routes/watchList.routes")(app)
 require("./routes/showFavorite.routes")(app)
+require("./routes/showWatchList.routes")(app)
 
 mongoose
   .connect(process.env.MONGO_URI)
