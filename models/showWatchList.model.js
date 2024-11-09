@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const ShowFavoriteSchema = new mongoose.Schema(
+const ShowWatchListSchema = new mongoose.Schema(
   {
     showId: {
       type: Number,
@@ -19,6 +19,6 @@ const ShowFavoriteSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-const ShowFavorite = mongoose.model("ShowFavorite", ShowFavoriteSchema)
+const ShowWatchList = mongoose.model("ShowWatchList", ShowWatchListSchema)
 
-module.exports = ShowFavorite
+module.exports = ShowWatchList

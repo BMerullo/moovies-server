@@ -6,4 +6,14 @@ module.exports = (app) => {
     "/api/user/showFavorite/:userId",
     showFavoriteController.findAllShowFavoritesByUser
   )
+  app.get(
+    "/api/user/:userId/showFavorite/:showId",
+    showFavoriteController.findShowFavoritesByUserAndMovie
+  )
+  app.post(
+    "/api/showFavorite",
+    authenticate,
+    showFavoriteController.createNewShowFavorite
+  )
+  app.delete("/api/showFavorite/:id", showFavoriteController.deleteShowFavorite)
 }
