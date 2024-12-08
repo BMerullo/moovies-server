@@ -47,6 +47,8 @@ module.exports = {
                     ),
                     {
                       httpOnly: true,
+                      secure: true,
+                      sameSite: "None",
                       expires: new Date(Date.now() + 6000000),
                     }
                   )
