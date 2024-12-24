@@ -23,17 +23,21 @@ module.exports = {
       })
   },
   login: (req, res) => {
+    console.log("Login request received")
+
     User.findOne({ email: req.body.email })
       .then((userRecord) => {
         if (!userRecord) {
+          console.log("User not found")
           return res.status(400).json({ message: "Invalid login attempt" })
         }
 
-        // Compare the entered password with the hashed password in the database
+        // Compare entered password with hashed password in the database
         bcrypt
           .compare(req.body.password, userRecord.password)
           .then((isMatch) => {
             if (!isMatch) {
+              console.log("Password mismatch")
               return res
                 .status(400)
                 .json({ message: "Invalid email or password" })
@@ -41,7 +45,7 @@ module.exports = {
 
             console.log("Password is valid")
 
-            // Create the JWT token
+            // Generate JWT
             const userToken = jwt.sign(
               {
                 id: userRecord._id,
@@ -49,15 +53,15 @@ module.exports = {
                 username: userRecord.username,
               },
               process.env.JWT_SECRET,
-              { expiresIn: "1h" } // Token expiry
+              { expiresIn: "1h" } // 1-hour token expiry
             )
 
-            // Set the token as a cookie
+            // Set cookie with token
             res
               .cookie("usertoken", userToken, {
                 httpOnly: true,
-                secure: true, // Only send over HTTPS
-                sameSite: "None", // Cross-origin cookie
+                secure: true, // Send cookie only over HTTPS
+                sameSite: "None", // Required for cross-origin cookies
                 maxAge: 60 * 60 * 1000, // 1 hour
               })
               .json({
@@ -67,15 +71,16 @@ module.exports = {
               })
           })
           .catch((err) => {
-            console.error("Password comparison error:", err)
-            res.status(400).json({ message: "Invalid login attempt" })
+            console.error("Error during password comparison:", err)
+            res.status(500).json({ message: "Internal server error" })
           })
       })
       .catch((err) => {
-        console.error("Error finding user:", err)
-        res.status(400).json({ message: "Invalid login attempt" })
+        console.error("Error during user lookup:", err)
+        res.status(500).json({ message: "Internal server error" })
       })
   },
+
   logout: (req, res) => {
     console.log("Logging out")
     res.clearCookie("usertoken")
