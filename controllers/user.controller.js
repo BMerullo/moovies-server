@@ -24,56 +24,56 @@ module.exports = {
   },
   login: (req, res) => {
     User.findOne({ email: req.body.email })
-
       .then((userRecord) => {
-        if (userRecord === null) {
-          res.status(400).json({ message: "Invalid login attempt" })
-        } else {
-          bcrypt
-            .compare(req.body.password, userRecord.password)
-            .then(() => {
-              if (req.body.password === userRecord.password) {
-                console.log("Password is valid")
-                res
-                  .cookie(
-                    "usertoken",
-                    jwt.sign(
-                      {
-                        id: userRecord._id,
-                        email: userRecord.email,
-                        username: userRecord.username,
-                      },
-                      process.env.JWT_SECRET
-                    ),
-                    {
-                      httpOnly: true,
-                      secure: true,
-                      sameSite: "None",
-                      expires: new Date(Date.now() + 6000000),
-                    }
-                  )
-                  .json({
-                    message: "Successfully logged in",
-                    userLoggedIn: userRecord.username,
-                    userId: userRecord._id,
-                  })
-              } else {
-                res.status(400).json({
-                  message: "Password and/or email Invalid!",
-                })
-              }
-            })
-            .catch((err) => {
-              console.log(err)
-              res.status(400).json({
-                message: "Invalid attempt",
-              })
-            })
+        if (!userRecord) {
+          return res.status(400).json({ message: "Invalid login attempt" })
         }
+
+        // Compare the entered password with the hashed password in the database
+        bcrypt
+          .compare(req.body.password, userRecord.password)
+          .then((isMatch) => {
+            if (!isMatch) {
+              return res
+                .status(400)
+                .json({ message: "Invalid email or password" })
+            }
+
+            console.log("Password is valid")
+
+            // Create the JWT token
+            const userToken = jwt.sign(
+              {
+                id: userRecord._id,
+                email: userRecord.email,
+                username: userRecord.username,
+              },
+              process.env.JWT_SECRET,
+              { expiresIn: "1h" } // Token expiry
+            )
+
+            // Set the token as a cookie
+            res
+              .cookie("usertoken", userToken, {
+                httpOnly: true,
+                secure: true, // Only send over HTTPS
+                sameSite: "None", // Cross-origin cookie
+                maxAge: 60 * 60 * 1000, // 1 hour
+              })
+              .json({
+                message: "Successfully logged in",
+                userLoggedIn: userRecord.username,
+                userId: userRecord._id,
+              })
+          })
+          .catch((err) => {
+            console.error("Password comparison error:", err)
+            res.status(400).json({ message: "Invalid login attempt" })
+          })
       })
       .catch((err) => {
-        console.log("error")
-        res.status(400).json({ message: "Invalid Attempt" })
+        console.error("Error finding user:", err)
+        res.status(400).json({ message: "Invalid login attempt" })
       })
   },
   logout: (req, res) => {
