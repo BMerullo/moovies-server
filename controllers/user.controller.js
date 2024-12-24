@@ -65,6 +65,7 @@ module.exports = {
             })
             .catch((err) => {
               console.log(err)
+              console.log("JWT error:", err.message)
               res.status(400).json({
                 message: "Invalid attempt",
               })
